@@ -145,6 +145,7 @@ namespace WFAI.Page
         {
             lvMsgData.Items.Add(text);
             //lvMsgData.Refresh();
+            //lvMsgData.HorizontalScrollbar
         }
         #endregion
 

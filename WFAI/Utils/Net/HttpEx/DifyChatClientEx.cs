@@ -10,7 +10,7 @@ namespace WFAI.Utils.Net.HttpEx
 {
     public class IniDifyChatConfigData : IniConfigData
     {
-        public required string UserParams { get; set; }
+        public required  string UserParams { get; set; }
         public required string UserValue { get; set; }
         public required string APIKeyParameter { get; set; }
 

@@ -139,15 +139,15 @@ namespace WFAI.Utils.Net.Pojo
         /// <summary>
         /// 会话 ID
         /// </summary>
-        public string conversation_id { get; set; }
+        public required string conversation_id { get; set; }
         /// <summary>
         /// 用户标识，由开发者定义规则，需保证用户标识在应用内唯一。
         /// </summary>
-        public string user { get; set; }
+        public  required string user { get; set; }
         /// <summary>
         /// 当前页第一条聊天记录的 ID，默认 null
         /// </summary>
-        public string? first_id { get; set; } = null;
+        public required string? first_id { get; set; } = null;
 
         /// <summary>
         /// 一次请求返回多少条聊天记录，默认 20 条。
