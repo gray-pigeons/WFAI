@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WFAI.Utils.Net.HttpEx;
+using WFAI.WFDifyAI;
 
 namespace WFAI.Utils.Tools.IniEx
 {
@@ -27,6 +28,12 @@ namespace WFAI.Utils.Tools.IniEx
         public const string DifyUser = "DifyUser";
         public const string DifyQwenServerApiKey = "QwenServerApiKey";
         public const string DifyGeminiApiKey = "GeminiApiKey";
+
+
+        public const string OllamaServerSection = "OllamaServerSection";
+        public const string OllamaBaseServerAddr = "OllamaBaseServerAddr";
+        public const string OllamaModel = "OllamaModel";
+        public const string OllamaUser = "OllamaUser";
 
     }
 
@@ -65,6 +72,23 @@ namespace WFAI.Utils.Tools.IniEx
             iniConfigData.KeyVal = _fileExni.Read(iniConfigData.Section, iniConfigData.KeyParameter, iniConfigData.KeyVal);
             iniConfigData.APIKeyValue = _fileExni.Read(iniConfigData.Section, iniConfigData.APIKeyParameter, iniConfigData.APIKeyValue);
             iniConfigData.UserValue = _fileExni.Read(iniConfigData.Section, iniConfigData.UserParams, iniConfigData.UserValue);
+            return (true, iniConfigData);
+        }
+
+        public static (bool isOk, LocalOllamaChatConfigData data) GetDifyIniConfigData(LocalOllamaChatConfigData iniConfigData)
+        {
+            if (iniConfigData == null)
+            {
+                throw new ArgumentNullException("未获取到相关参数数据");
+            }
+            if (string.IsNullOrEmpty(iniConfigData.Section) || !_fileExni.HasSection(iniConfigData.Section))
+            {
+                return (false, iniConfigData);
+            }
+
+            iniConfigData.KeyVal = _fileExni.Read(iniConfigData.Section, iniConfigData.KeyParameter, iniConfigData.KeyVal);
+            iniConfigData.ModelValue = _fileExni.Read(iniConfigData.Section, iniConfigData.ModelParams, iniConfigData.ModelValue);
+            iniConfigData.UserValue = _fileExni.Read(iniConfigData.Section, iniConfigData.UserParameter, iniConfigData.UserValue);
             return (true, iniConfigData);
         }
 

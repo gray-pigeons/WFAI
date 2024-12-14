@@ -15,6 +15,7 @@ namespace WFAI
             //HttpEx.Init();
             IniEx.Init();
             DifyChatClientEx.Init();
+            LocalOllamaChatClientEx.Init();
         }
 
         private void InitAddLeftMuenCom()
