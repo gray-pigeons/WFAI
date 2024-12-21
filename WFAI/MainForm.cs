@@ -1,7 +1,5 @@
 using Sunny.UI;
 using WFAI.Page;
-using WFAI.Utils.Net;
-using WFAI.Utils.Net.HttpEx;
 using WFAI.Utils.Tools.IniEx;
 
 namespace WFAI
@@ -10,12 +8,9 @@ namespace WFAI
     {
         public MainForm()
         {
+            IniEx.Init();
             InitializeComponent();
             InitAddLeftMuenCom();
-            //HttpEx.Init();
-            IniEx.Init();
-            DifyChatClientEx.Init();
-            LocalOllamaChatClientEx.Init();
         }
 
         private void InitAddLeftMuenCom()
@@ -28,7 +23,8 @@ namespace WFAI
             //Aside.SetNodePageIndex(Aside.Nodes[0], pageIndex);
             TreeNode parent = Aside.CreateNode("聊天", 61451, 24, pageIndex);
             //通过设置PageIndex关联，节点文字、图标由相应的Page的Text、Symbol提供
-            Aside.CreateChildNode(parent, AddPage(new UserChatPage(), ++pageIndex));
+            //Aside.CreateChildNode(parent, AddPage(new UserChatPage(), ++pageIndex));
+            Aside.CreateChildNode(parent, AddPage(new ChatBoxPage(), ++pageIndex));
             //选中第一个节点
             Aside.SelectPage(pageIndex);
 

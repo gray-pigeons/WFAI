@@ -17,6 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AntdUI" Version="1.7.13" />
     <PackageReference Include="Autoupdater.NET.Official" Version="1.9.2" />
     <PackageReference Include="Costura.Fody" Version="6.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -30,6 +31,17 @@
 
   <ItemGroup>
     <Folder Include="UI\Froms\" />
+    <Folder Include="WFDifyAI\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CSharpAIUtils\CSharpUtils.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="WFComponent">
+      <HintPath>..\WFComponent\bin\Release\WFComponent.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

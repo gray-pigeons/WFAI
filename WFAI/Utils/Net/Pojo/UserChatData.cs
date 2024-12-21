@@ -10,6 +10,7 @@ namespace WFAI.Utils.Net.Pojo
     {
         public required string Message {  get; set; }
         public required  string MessageID { get; set; }
+        public required  string TaskID { get; set; }
 
         public required string UserName { get; set; }
 
@@ -18,10 +19,12 @@ namespace WFAI.Utils.Net.Pojo
         /// </summary>
         public required string ConversationID{ get; set; }
 
+        public Bitmap HeadIcon { get; set; }
+
 
         public override string ToString()
         {
-            return $"[AI]:{Message}";
+            return $"{Message}";
         }
     }
 }

@@ -1,24 +1,9 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WFAI.Utils.Net.HttpEx;
+﻿using CSharpUtils.DifyAI.Const;
+using Newtonsoft.Json;
 
-namespace WFAI.Utils.Net.Pojo
+
+namespace CSharpUtils.DifyAI.ChatMessage
 {
-    public enum DifyRsponseMode
-    {
-        /// <summary>
-        /// 流式模式（推荐）。基于 SSE（Server-Sent Events）实现类似打字机输出方式的流式返回
-        /// </summary>
-        Streaming,
-        /// <summary>
-        /// 阻塞模式，等待执行完毕后返回结果。
-        /// </summary>
-        Blocking,
-    }
 
     #region 发送聊天消息
 
@@ -34,7 +19,8 @@ namespace WFAI.Utils.Net.Pojo
         public ReqDifyChatMessage(string query, DifyRsponseMode mode = DifyRsponseMode.Streaming)
         {
             this.query = query;
-            user = DifyChatClientEx.difyChatConfigData.UserValue;
+            //user = DifyChatClientEx.difyChatConfigData.UserValue;
+            user = "DifyChatClientEx.difyChatConfigData.UserValue";
             if (mode == DifyRsponseMode.Streaming)
             {
                 response_mode = "streaming";

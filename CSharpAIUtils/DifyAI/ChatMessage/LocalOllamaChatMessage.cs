@@ -1,7 +1,6 @@
-﻿
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace WFAI.Utils.Net.Pojo
+namespace CSharpUtils.DifyAI.ChatMessage
 {
     internal class LocalOllamaChatMessage
     {

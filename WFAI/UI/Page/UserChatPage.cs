@@ -1,11 +1,13 @@
-﻿using DifyAI.ObjectModels;
+﻿using CSharpUtils.DifyAI;
+using CSharpUtils.DifyAI.ChatMessage;
+using CSharpUtils.DifyAI.Const;
+using CSharpUtils.DifyAI.Extension;
+using DifyAI.ObjectModels;
 using Masuit.Tools;
 using Masuit.Tools.Systems;
 using Sunny.UI;
 using WFAI.Utils.Net.HttpEx;
 using WFAI.Utils.Net.Pojo;
-using WFAI.WFDifyAI;
-using WFAI.WFDifyAI.ChatMessage;
 
 
 namespace WFAI.Page
@@ -103,7 +105,7 @@ namespace WFAI.Page
                 //var res = HttpEx.GetAsync<string>(APIEx.ChatAIBaseChatURL);
                 //var res =  await HttpClientEx.GetAsync<string,string>(APIEx.ChatAIBaseChatURL);
                 //var res =  await HttpClientEx.GetAsync<string>(APIEx.ChatAIBaseURL);
-                DifyChatMessages DifyChat = new DifyChatMessages();
+                DifyAIChatMessages DifyChat = new DifyAIChatMessages("","","");
                 AddMsgItemTolvMsgData($"[用户]:{msg}");
                 txtInputMsg.Text = "";
                 //await SendDifyChatMessage(msg);
@@ -122,7 +124,7 @@ namespace WFAI.Page
             }
         }
 
-        private async Task SendStreamDifyAIChatMsg(DifyChatMessages DifyChat, string msg)
+        private async Task SendStreamDifyAIChatMsg(DifyAIChatMessages DifyChat, string msg)
         {
             var req = new ChatCompletionRequest()
             {
@@ -141,6 +143,7 @@ namespace WFAI.Page
                 Message = string.Empty,
                 UserName = string.Empty,
                 ConversationID = string.Empty,
+                TaskID = string.Empty,
             };
             await DifyChat.SendStreamChatMsg(req, (rsp) =>
             {
@@ -178,53 +181,53 @@ namespace WFAI.Page
 
 
         #region 自己的发送消息到聊天服务器
-        private async Task SendOllamaChatMessage(string msg)
-        {
-            var request = new LocalOllamaChatMessageReq()
-            {
-                PromptMessage = msg,
-                Model = LocalOllamaChatClientEx.localOllamaChatConfigData.ModelValue,
-                Stream = false,
-            };
-            var res = await LocalOllamaChatClientEx.SendChatMessageAsync<LocalOllamaChatMessageReq, LocalOllamaChatMessageRsp>(request);
-            if (res != null)
-            {
-                var data = new UserChatData()
-                {
-                    MessageID = string.Empty,
-                    Message = res.Response,
-                    UserName = string.Empty,
-                    ConversationID = string.Empty,
-                };
-                AddMsgItemTolvMsgData(data.ToString());
-            }
-        }
+        //private async Task SendOllamaChatMessage(string msg)
+        //{
+        //    var request = new LocalOllamaChatMessageReq()
+        //    {
+        //        PromptMessage = msg,
+        //        Model = LocalOllamaChatClientEx.localOllamaChatConfigData.ModelValue,
+        //        Stream = false,
+        //    };
+        //    var res = await LocalOllamaChatClientEx.SendChatMessageAsync<LocalOllamaChatMessageReq, LocalOllamaChatMessageRsp>(request);
+        //    if (res != null)
+        //    {
+        //        var data = new UserChatData()
+        //        {
+        //            MessageID = string.Empty,
+        //            Message = res.Response,
+        //            UserName = string.Empty,
+        //            ConversationID = string.Empty,
+        //        };
+        //        AddMsgItemTolvMsgData(data.ToString());
+        //    }
+        //}
 
-        private async Task SendDifyChatMessage(string msg)
-        {
-            var req = new ReqDifyChatMessage(msg, DifyRsponseMode.Blocking);
-            req.conversation_id = ConversationID;
-            var res = await DifyChatClientEx.SendChatMessageAsync<ReqDifyChatMessage, RspDifyChatMessage>(req);
-            //var rsp = await DifyChatClientEx.SendChatMessageAsync<ReqDifyChatMessage>(APIEx.JdfyChatAPIKey, req);
-            //var res = await DifyChatClientEx.HandleStreamingResponse(rsp);
-            Console.WriteLine($"输出的内容：{res}");
-            //UIMessageBox.Show("输出：" + res.answer);
-            if (res != null)
-            {
-                var data = new UserChatData()
-                {
-                    MessageID = res.message_id,
-                    Message = res.answer,
-                    UserName = res.Event,
-                    ConversationID = res.conversation_id,
-                };
-                AddMsgItemTolvMsgData(data.ToString());
-                if (!string.IsNullOrEmpty(res.conversation_id))
-                {
-                    ConversationID = res.conversation_id;
-                }
-            }
-        }
+        //private async Task SendDifyChatMessage(string msg)
+        //{
+        //    var req = new ReqDifyChatMessage(msg, DifyRsponseMode.Blocking);
+        //    req.conversation_id = ConversationID;
+        //    var res = await DifyChatClientEx.SendChatMessageAsync<ReqDifyChatMessage, RspDifyChatMessage>(req);
+        //    //var rsp = await DifyChatClientEx.SendChatMessageAsync<ReqDifyChatMessage>(APIEx.JdfyChatAPIKey, req);
+        //    //var res = await DifyChatClientEx.HandleStreamingResponse(rsp);
+        //    Console.WriteLine($"输出的内容：{res}");
+        //    //UIMessageBox.Show("输出：" + res.answer);
+        //    if (res != null)
+        //    {
+        //        var data = new UserChatData()
+        //        {
+        //            MessageID = res.message_id,
+        //            Message = res.answer,
+        //            UserName = res.Event,
+        //            ConversationID = res.conversation_id,
+        //        };
+        //        AddMsgItemTolvMsgData(data.ToString());
+        //        if (!string.IsNullOrEmpty(res.conversation_id))
+        //        {
+        //            ConversationID = res.conversation_id;
+        //        }
+        //    }
+        //}
         #endregion
 
         #region lvMsgData

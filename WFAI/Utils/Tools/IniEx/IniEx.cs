@@ -1,15 +1,10 @@
-﻿using Sunny.UI;
+﻿using CSharpUtils.DifyAI;
+using Sunny.UI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WFAI.Utils.Net.HttpEx;
-using WFAI.WFDifyAI;
+
 
 namespace WFAI.Utils.Tools.IniEx
 {
-
 
     public class IniConfigData
     {
@@ -37,6 +32,15 @@ namespace WFAI.Utils.Tools.IniEx
 
     }
 
+    public class IniDifyChatConfigData : IniConfigData
+    {
+        public required string UserParams { get; set; }
+        public required string UserValue { get; set; }
+        public required string APIKeyParameter { get; set; }
+
+        public required string APIKeyValue { get; set; }
+    }
+
     internal class IniEx
     {
 
@@ -49,6 +53,10 @@ namespace WFAI.Utils.Tools.IniEx
             {
                 fileNamePath = $"{Application.StartupPath}/WFAI.ini";
                 _fileExni = new IniFileEx(fileNamePath);
+            }
+          if (_fileExni == null)
+            {
+                throw new NullReferenceException("未读取到配置文件");
             }
         }
 
@@ -75,22 +83,22 @@ namespace WFAI.Utils.Tools.IniEx
             return (true, iniConfigData);
         }
 
-        public static (bool isOk, LocalOllamaChatConfigData data) GetDifyIniConfigData(LocalOllamaChatConfigData iniConfigData)
-        {
-            if (iniConfigData == null)
-            {
-                throw new ArgumentNullException("未获取到相关参数数据");
-            }
-            if (string.IsNullOrEmpty(iniConfigData.Section) || !_fileExni.HasSection(iniConfigData.Section))
-            {
-                return (false, iniConfigData);
-            }
+        //public static (bool isOk, LocalOllamaChatConfigData data) GetDifyIniConfigData(LocalOllamaChatConfigData iniConfigData)
+        //{
+        //    if (iniConfigData == null)
+        //    {
+        //        throw new ArgumentNullException("未获取到相关参数数据");
+        //    }
+        //    if (string.IsNullOrEmpty(iniConfigData.Section) || !_fileExni.HasSection(iniConfigData.Section))
+        //    {
+        //        return (false, iniConfigData);
+        //    }
 
-            iniConfigData.KeyVal = _fileExni.Read(iniConfigData.Section, iniConfigData.KeyParameter, iniConfigData.KeyVal);
-            iniConfigData.ModelValue = _fileExni.Read(iniConfigData.Section, iniConfigData.ModelParams, iniConfigData.ModelValue);
-            iniConfigData.UserValue = _fileExni.Read(iniConfigData.Section, iniConfigData.UserParameter, iniConfigData.UserValue);
-            return (true, iniConfigData);
-        }
+        //    iniConfigData.KeyVal = _fileExni.Read(iniConfigData.Section, iniConfigData.KeyParameter, iniConfigData.KeyVal);
+        //    iniConfigData.ModelValue = _fileExni.Read(iniConfigData.Section, iniConfigData.ModelParams, iniConfigData.ModelValue);
+        //    iniConfigData.UserValue = _fileExni.Read(iniConfigData.Section, iniConfigData.UserParameter, iniConfigData.UserValue);
+        //    return (true, iniConfigData);
+        //}
 
         public static void SetDifyIniConfigData(IniDifyChatConfigData iniConfigData)
         {

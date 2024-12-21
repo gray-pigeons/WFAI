@@ -1,14 +1,10 @@
-﻿using AutoUpdaterDotNET;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WFAI.Utils.Net.Pojo;
+﻿
 
-namespace WFAI.WFDifyAI
+using CSharpUtils.DifyAI.Const;
+
+namespace CSharpUtils.DifyAI.Extension
 {
-    internal static class DifyEventTypeExtentions
+    public static class DifyEventTypeExtension
     {
         public static DifyEventType GetDifyEventType(this string eventType)
         {
@@ -44,7 +40,7 @@ namespace WFAI.WFDifyAI
         {
             if (difyRsponseMode == DifyRsponseMode.Streaming)
             {
-              return "streaming";
+                return "streaming";
             }
             else if (difyRsponseMode == DifyRsponseMode.Blocking)
             {
