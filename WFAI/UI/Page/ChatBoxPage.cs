@@ -3,6 +3,7 @@ using CSharpUtils.DifyAI;
 using CSharpUtils.DifyAI.ChatMessage;
 using CSharpUtils.DifyAI.Extension;
 using DifyAI.ObjectModels;
+using Masuit.Tools;
 using Sunny.UI;
 using WFAI.Utils.Net.Pojo;
 using WFAI.Utils.Tools.IniEx;
@@ -24,6 +25,9 @@ namespace WFAI.Page
         {
             InitOther();
         }
+
+
+
         IniDifyChatConfigData difyChatConfigData;
         DifyAIChatMessages difyChat;
 
@@ -33,18 +37,49 @@ namespace WFAI.Page
             {
                 Section = IniConfigConst.DifyServerSection,
                 KeyParameter = IniConfigConst.DifyServerAddr,
-                KeyVal = string.Empty,
+                KeyVal = "https://jdify.667374.xyz/v1",
+                //KeyVal = "http://159.112.186.46:8090/v1",
                 APIKeyParameter = IniConfigConst.DifyQwenServerApiKey,
-                APIKeyValue = string.Empty,
+                APIKeyValue = "app-RlDcoVWSpbvdvmWLTbHT53Or",
+                //APIKeyValue = "app-lwXtmR4MWJrqctdrA6YuO6d1",
+                //APIKeyValue = "app-lwXtmR4MWJrqctdrA6YuO6d1",//frp
                 UserParams = IniConfigConst.DifyUser,
-                UserValue = string.Empty,
+                UserValue = "0a68eb57"
             };
             var (isOk, _) =IniEx. GetDifyIniConfigData(difyChatConfigData);
             if (!isOk)
             {
                 throw new NullReferenceException("未读取到配置数据");
             }
+            //difyChatConfigData.APIKeyValue = "app-8Vae535bz9qWZfquzfCeN15b";
             difyChat = new DifyAIChatMessages(difyChatConfigData.KeyVal,difyChatConfigData.APIKeyValue,"");
+
+        }
+
+        private async void InitLoadHistoryInfo()
+        {
+            var req = new MessageHistoryRequest();
+            req.User = "user123";
+            req.ApiKey = difyChatConfigData.APIKeyValue;
+            //req.FirstId
+           var rsp = await difyChat.GetHistoryInfo(req);
+            if (rsp != null&& rsp.Data!=null) 
+            {
+                foreach (var item in rsp.Data)
+                {
+                    var data = new UserChatData()
+                    {
+                        MessageID = item.Id,
+                        Message = item.Answer,
+                        UserName = item.Query,
+                        ConversationID = item.ConversationId,
+                        TaskID = string.Empty,
+                    };
+
+                    AddMsgItemToLeftlvMsgData(data);
+                }
+            }
+            UIMessageBox.Show($"{rsp.ToJsonString()}");
         }
 
         #region 输入框部分
@@ -67,6 +102,8 @@ namespace WFAI.Page
 
         private void btnSendMsg_Click(object sender, EventArgs e)
         {
+            //InitLoadHistoryInfo();
+
             SendInputMsgToServer();
 
         }
@@ -98,6 +135,7 @@ namespace WFAI.Page
             }
             catch (Exception ex)
             {
+                
                 UIMessageBox.Show($"发送错误:{ex.Message}");
                 btnSendMsg.Enabled = true;
             }

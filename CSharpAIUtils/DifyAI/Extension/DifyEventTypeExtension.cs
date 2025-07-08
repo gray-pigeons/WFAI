@@ -1,5 +1,4 @@
-﻿
-
+﻿using CSharpUtils.DifyAI;
 using CSharpUtils.DifyAI.Const;
 
 namespace CSharpUtils.DifyAI.Extension

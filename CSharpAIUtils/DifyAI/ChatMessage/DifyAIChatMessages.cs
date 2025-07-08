@@ -1,4 +1,5 @@
-﻿using DifyAI.ObjectModels;
+﻿using CSharpUtils.DifyAI;
+using DifyAI.ObjectModels;
 
 
 namespace CSharpUtils.DifyAI.ChatMessage
@@ -6,9 +7,9 @@ namespace CSharpUtils.DifyAI.ChatMessage
     public class DifyAIChatMessages : DifyAIClientBase
     {
 
-        public DifyAIChatMessages(string baseDomain, string apiKey, string datasetApiKey) :base(baseDomain, apiKey, datasetApiKey) 
+        public DifyAIChatMessages(string baseDomain, string apiKey, string datasetApiKey) : base(baseDomain, apiKey, datasetApiKey)
         {
-           
+
         }
 
         public async Task<ChatCompletionResponse> SendChatMsg(ChatCompletionRequest req)
@@ -27,6 +28,12 @@ namespace CSharpUtils.DifyAI.ChatMessage
                 }
                 updateNextDataCallbcak?.Invoke(rsp);
             }
+        }
+
+        public async Task<MessageHistoryResponse> GetHistoryInfo(MessageHistoryRequest req)
+        {
+           var historyRsp = await _difyAIService.Messages.HistoryAsync(req);
+            return historyRsp;
         }
 
     }

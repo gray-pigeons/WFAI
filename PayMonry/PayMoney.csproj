@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Essensoft.Paylinks.Alipay.Client" Version="5.0.0" />
+    <PackageReference Include="Essensoft.Paylinks.Alipay.Core" Version="5.0.0" />
+    <PackageReference Include="Essensoft.Paylinks.Alipay.Payments" Version="5.0.0" />
+    <PackageReference Include="Essensoft.Paylinks.Security" Version="5.0.0" />
+    <PackageReference Include="Essensoft.Paylinks.WeChatPay.Core" Version="5.0.0" />
+  </ItemGroup>
+
+</Project>
